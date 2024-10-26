@@ -1,0 +1,9 @@
+from calculator.history_facade import HistoryFacade
+
+def test_add_and_get_history():
+    history = HistoryFacade()
+    history.clear_history()
+    history.add_operation("add", 1, 2, 3)
+    result = history.get_history()
+    assert not result.empty
+    assert result.iloc[0]["operation"] == "add"
