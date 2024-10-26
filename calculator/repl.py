@@ -1,11 +1,25 @@
-from calculator.core import Calculator
+from calculator.plugin_loader import load_plugins
 
 def repl():
     calc = Calculator()
+    plugins = load_plugins()
     while True:
-        command = input("Enter command (add, sub, mul, div) or 'quit' to exit: ").strip().lower()
+        command = input("Enter command (add, sub, mul, div, plugins) or 'quit' to exit: ").strip().lower()
         if command == 'quit':
             break
+
+        if command == 'plugins':
+            print("Available plugins:", list(plugins.keys()))
+            continue
+
+        if command in plugins:
+            try:
+                a = float(input("Enter a number: "))
+                result = plugins[command].execute(a)
+                print(f"Result: {result}")
+            except Exception as ex:
+                print(f"Error: {ex}")
+            continue
 
         try:
             a = float(input("Enter first number: "))
